@@ -1,5 +1,5 @@
 #!/bin/bash
 
-zip -r repository.zip repository
+zip -r docs/repository.zip repository
 
-shasum -a 1 repository.zip > repository.zip.md5
+shasum -a 1 docs/repository.zip > docs/repository.zip.md5
