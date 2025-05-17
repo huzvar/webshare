@@ -5,9 +5,11 @@
   </requires>
 
   <extension point="xbmc.addon.repository" name="Kodi WebShare Addons">
-    <info compressed="false">https://huzvar.github.io/webshare/addons.xml</info>
-    <checksum>https://huzvar.github.io/webshare/addons.xml.md5</checksum>
-    <datadir>https://huzvar.github.io/webshare/zips/</datadir>
+    <dir>
+      <info compressed="false">https://huzvar.github.io/webshare/addons.xml</info>
+      <checksum>https://huzvar.github.io/webshare/addons.xml.md5</checksum>
+      <datadir>https://huzvar.github.io/webshare/zips/</datadir>
+    </dir>
   </extension>
 
   <extension point="xbmc.addon.metadata">
