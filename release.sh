@@ -1,5 +1,5 @@
 #!/bin/bash
 
-zip -r docs/repository.zip repository
+zip -r docs/repository.webshare.zip repository.webshare
 
-shasum -a 1 docs/repository.zip > docs/repository.zip.md5
+# shasum -a 1 docs/repository.webshare.zip > docs/repository.webshare.zip.md5
