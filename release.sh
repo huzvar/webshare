@@ -7,3 +7,5 @@ zip -r docs/repository.webshare.zip repository.webshare
 cp repository/addons.xml docs/addons.xml
 
 md5sum repository/addons.xml | cut -d ' ' -f 1 > docs/addons.xml.md5
+
+zip -r docs/plugin.video.webshare/plugin.video.webshare-0.1.0.zip repository/plugin.video.webshare
