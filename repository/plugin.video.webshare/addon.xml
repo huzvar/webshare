@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.webshare" name="webshare" version="0.1.0" provider-name="levik">
     <requires>
-        <!--import addon="xbmc.python" version="2.19.0"/-->
         <import addon="script.module.requests" version="2.18.4"/>
         <import addon="script.module.unidecode" version="0.4.16"/>
     </requires>
