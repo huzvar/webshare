@@ -2,7 +2,7 @@
 <settings>
   <category label="30204">
     <setting id="token" type="text" visible="false" />
-    <setting id="what_last" type="text" visible="false" default="%#NONE#%"/>
+    <setting id="what_last" type="text" visible="false" default=""/>
 
     <setting label="30030" type="lsep" />
     <setting label="30031" id="username" type="text" default="" />

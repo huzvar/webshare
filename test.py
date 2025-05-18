@@ -41,8 +41,9 @@ if __name__ == '__main__':
 
 
   # print(json.dumps(api.VideoList(search, "^" + search), indent = 2))
+  print(json.dumps(api.VideoList("M.A.S.H.EP", "^M\\.A\\.S\\.H\\.EP"), indent = 2))
 
-  data = api.VideoList(search, "^" + search)
+  # data = api.VideoList(search, "^" + search)
   
-  for file in data['file']:
-    print(file['name'])
+  # for file in data['file']:
+  #   print(file['name'])

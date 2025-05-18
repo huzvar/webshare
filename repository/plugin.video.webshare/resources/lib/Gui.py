@@ -7,9 +7,6 @@ from urllib.parse import urlencode
 from xml.etree import ElementTree
 
 from resources.lib.WebshareAPI import WebshareAPI
-
-NONE_WHAT = '%#NONE#%'
-
 class Gui:
   def __init__(self, url: str, handle: int):
     self._url = url
@@ -24,8 +21,16 @@ class Gui:
       {'name': "Star Wars - Dobrodruzstvi mladych Jediu", 'search': "Star Wars - Dobrodruzstvi mladych Jediu", 'pattern': "^Star Wars - Dobrodruzstvi mladych Jediu"},
 
       {'name': "Mandalorian", 'search': "Mandalorian", 'pattern': "^Mandalorian"},
-      {'name': "MASH", 'search': "M.A.S.H.EP", 'pattern': "^M\.A\.S\.H\.EP"},
+      {'name': "MASH", 'search': "M.A.S.H.EP", 'pattern': "^M\\.A\\.S\\.H\\.EP"},
     ]
+
+  def _get_page_limit(self) -> int:
+    page_limit = int(self._addon.getSetting("page_limit"))
+
+    if not page_limit:
+      page_limit = 25
+
+    return page_limit
 
   def _get_url(self, **kwargs):
     return '{0}?{1}'.format(self._url, urlencode(kwargs, 'utf-8'))
@@ -81,50 +86,31 @@ class Gui:
        return str(int(x))
     return str(x)
 
-  def _ShowList(self, data):
-      # if offset > 0: #prev page
-      #     list_item = xbmcgui.ListItem(label=_addon.getLocalizedString(30206))
-      #     list_item.setArt({'icon': 'DefaultAddonsSearch.png'})
-      #     xbmcplugin.addDirectoryItem(_handle, _get_url(action=action, what=what, category=category, sort=sort, limit=limit, offset=offset - limit if offset > limit else 0), list_item, True)
-          
-      for file in data['file']:
-        list_item = xbmcgui.ListItem(label = file['name'] + ' (' + file['size'] + ')')
+  def _ShowList(self, params, data):
+    for file in data['file']:
+      list_item = xbmcgui.ListItem(label = file['name'] + ' (' + file['size'] + ')')
 
-        if 'img' in file:
-          list_item.setArt({'thumb': file['img']})
+      if 'img' in file:
+        list_item.setArt({'thumb': file['img']})
 
-        list_item.setInfo('video', {
-          'title': file['name'],
-          'plot': self._addon.getLocalizedString(30501) + file['size']
-        })
+      # video info
+      info_tag = list_item.getVideoInfoTag()
+      info_tag.setTitle(file['name'])
+      info_tag.setPlot(self._addon.getLocalizedString(30501) + file['size'])
 
-        text = self._addon.getLocalizedString(30501)
+      text = self._addon.getLocalizedString(30501)
 
-        xbmc.log(f"SEARCH: what = {text}", level=xbmc.LOGDEBUG)
+      xbmc.log(f"SEARCH: what = {text}", level=xbmc.LOGDEBUG)
 
-        list_item.setProperty('IsPlayable', 'true')
+      list_item.setProperty('IsPlayable', 'true')
 
-        commands = [
-          (self._addon.getLocalizedString(30211), 'RunPlugin(' + self._get_url(action='info', ident=file['ident']) + ')')
-        ]
+      commands = [
+        (self._addon.getLocalizedString(30211), 'RunPlugin(' + self._get_url(action='info', ident=file['ident']) + ')')
+      ]
 
-        list_item.addContextMenuItems(commands)
+      list_item.addContextMenuItems(commands)
 
-        xbmcplugin.addDirectoryItem(self._handle, self._get_url(action = 'play', ident = file['ident'], name = file['name']), list_item, False)
-      
-      # try:
-      #   total = int(xml.find('total').text)
-      # except:
-      #   total = 0
-          
-      # if offset + limit < total: #next page
-      #   list_item = xbmcgui.ListItem(label=_addon.getLocalizedString(30207))
-      #   list_item.setArt({'icon': 'DefaultAddonsSearch.png'})
-      #   xbmcplugin.addDirectoryItem(_handle, _get_url(action=action, what=what, category=category, sort=sort, limit=limit, offset=offset+limit), list_item, True)
-      # else:
-      #   popinfo(_addon.getLocalizedString(30107), icon=xbmcgui.NOTIFICATION_WARNING)
-
-
+      xbmcplugin.addDirectoryItem(self._handle, self._get_url(action = 'play', ident = file['ident'], name = file['name']), list_item, False, True)
   
   def Info(self, params):
     data = self._api.file_info(params['ident'])
@@ -148,20 +134,41 @@ class Gui:
 
   def List(self, params):
     index = int(params['index'])
-    page_limit = self._addon.getSetting("page_limit")
+
+    page = int(params.get("page", 1))
 
     if 0 <= index < len(self._lists): 
       list = self._lists[index]
 
-      xbmcplugin.setPluginCategory(self._handle, self._addon.getAddonInfo('name') + " \ " + self._addon.getLocalizedString(30201))
-      
-      data = self._api.VideoList(list['search'], list['pattern'])
+      xbmcplugin.setPluginCategory(self._handle, self._addon.getAddonInfo('name') + " / " + list['name'])
 
-      self._ShowList(data)
-  
+      # call search
+      data = self._api.VideoList(list['search'], list['pattern'], page, self._get_page_limit())
+
+      # back to menu
+      list_item = xbmcgui.ListItem(label = self._addon.getLocalizedString(30210))
+      list_item.setArt({'icon': 'special://home/addons/plugin.video.webshare/resources/media/back.png'})
+
+      xbmcplugin.addDirectoryItem(self._handle, self._url, list_item, True)
+
+      # preview page action
+      if page > 1: 
+        list_item = xbmcgui.ListItem(label = self._addon.getLocalizedString(30206))
+        list_item.setArt({'icon': 'special://home/addons/plugin.video.webshare/resources/media/page_preview.png'})
+
+        xbmcplugin.addDirectoryItem(self._handle, self._get_url(action = params['action'], index = params['index'], page = page - 1), list_item, True)
+
+      self._ShowList(params, data)
+
+      # next page action
+      if page <  data['pages_count']:
+        list_item = xbmcgui.ListItem(label = self._addon.getLocalizedString(30207))
+        list_item.setArt({'icon': 'special://home/addons/plugin.video.webshare/resources/media/page_next.png'})
+
+        xbmcplugin.addDirectoryItem(self._handle, self._get_url(action = params['action'], index = params['index'], page = page + 1), list_item, True)
+
     else:
-      #  TODO: upravit spravu
-      self._notification(self._addon.getLocalizedString(30107), icon = xbmcgui.NOTIFICATION_WARNING)
+      self._notification(self._addon.getLocalizedString(30108), icon = xbmcgui.NOTIFICATION_WARNING)
 
     xbmcplugin.endOfDirectory(self._handle)
 
@@ -200,16 +207,14 @@ class Gui:
   def Search(self, params):
     updateListing = False
 
-    xbmcplugin.setPluginCategory(self._handle, self._addon.getAddonInfo('name') + " \ " + self._addon.getLocalizedString(30201))
+    xbmcplugin.setPluginCategory(self._handle, self._addon.getAddonInfo('name') + " / " + self._addon.getLocalizedString(30201))
     
-    what = ""
+    what = params.get("what", "")
+    offset = int(params.get("offset", 0))
     
-    if 'what' in params:
-      what = params['what']
-    
-    what_last = self._addon.getSetting('what_last')
+    what_last = self._addon.getSetting("what_last")
 
-    if what_last != what:
+    if not what_last or what != what_last:
       keyboard = xbmc.Keyboard(what_last, self._addon.getLocalizedString(30007))
       keyboard.doModal()
 
@@ -224,18 +229,29 @@ class Gui:
 
       self._addon.setSetting('what_last', what)
 
-      # if 'offset' not in params:
-      #   self._addon.setSetting('what_last', what)
-
-      # else:
-      #   self._addon.setSetting('what_last', NONE_WHAT)
-      #   updateListing=True
-
-      offset = 0
-
       # call search
-      data = self._api.search(what, offset=offset)
+      data = self._api.search(what, self._get_page_limit(), offset)
 
-      self._ShowList(data)
+      # back to menu
+      list_item = xbmcgui.ListItem(label = self._addon.getLocalizedString(30210))
+      list_item.setArt({'icon': 'special://home/addons/plugin.video.webshare/resources/media/back.png'})
+
+      xbmcplugin.addDirectoryItem(self._handle, self._url, list_item, True)
+
+      # preview page action
+      if offset > 0: 
+        list_item = xbmcgui.ListItem(label = self._addon.getLocalizedString(30206))
+        list_item.setArt({'icon': 'special://home/addons/plugin.video.webshare/resources/media/page_preview.png'})
+
+        xbmcplugin.addDirectoryItem(self._handle, self._get_url(action = params['action'], what = what, offset = offset - self._get_page_limit()), list_item, True)
+
+      self._ShowList(params, data)
   
+      # next page action
+      if offset + self._get_page_limit() < int(data['total']):
+        list_item = xbmcgui.ListItem(label = self._addon.getLocalizedString(30207))
+        list_item.setArt({'icon': 'special://home/addons/plugin.video.webshare/resources/media/page_next.png'})
+
+        xbmcplugin.addDirectoryItem(self._handle, self._get_url(action = params['action'], what = what, offset = offset + self._get_page_limit()), list_item, True)
+
     xbmcplugin.endOfDirectory(self._handle, updateListing = updateListing)

@@ -1,6 +1,7 @@
 # https://webshare.cz/apidoc/
 
 import hashlib
+import math
 import re
 import requests
 import uuid
@@ -249,7 +250,10 @@ class WebshareAPI:
 
     return xml
 
-  def VideoList(self, search: str, pattern: str) -> dict:
+  def VideoList(self, search: str, pattern: str, page: int = 1, page_limit: int = 25) -> dict:
+    if not (0 < page_limit <= 100): 
+      page_limit = 25
+
     data = self.search(search, limit = 200)
 
     filtered_data = []
@@ -262,4 +266,13 @@ class WebshareAPI:
 
     sorted_data = sorted(filtered_data, key=lambda x: x["name"])
 
-    return {'total': len(sorted_data), 'file': sorted_data}
+    # check page
+    if not (0 < page <= math.ceil(len(sorted_data) / page_limit)):
+      page = 1
+
+    return {
+      'total': len(sorted_data),
+      'page': page,
+      'pages_count': math.ceil(len(sorted_data) / page_limit),
+      'file': sorted_data[((page - 1) * page_limit):(page * page_limit)],
+    }
