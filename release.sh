@@ -12,5 +12,5 @@ cd repository
 # rm ../docs/plugin.video.webshare/plugin.video.webshare-${VERSION}.zip
 # zip -r ../docs/plugin.video.webshare/plugin.video.webshare-${VERSION}.zip plugin.video.webshare
 
-
+rm ../docs/plugin.video.webshare.zip
 zip -r ../docs/plugin.video.webshare.zip plugin.video.webshare
