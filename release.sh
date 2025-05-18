@@ -1,11 +1,15 @@
 #!/bin/bash
 
+rm docs/repository.webshare.zip
 zip -r docs/repository.webshare.zip repository.webshare
 
 # shasum -a 1 docs/repository.webshare.zip > docs/repository.webshare.zip.md5
 
-cp repository/addons.xml docs/addons.xml
+cd repository
 
-md5sum repository/addons.xml | cut -d ' ' -f 1 > docs/addons.xml.md5
+cp addons.xml ../docs/addons.xml
+md5sum addons.xml > ../docs/addons.xml.md5
 
-zip -r docs/plugin.video.webshare/plugin.video.webshare-0.1.0.zip repository/plugin.video.webshare
+VERSION=`awk -F'version="' '/<addon/{split($2,a,"\""); print a[1]}' plugin.video.webshare/addon.xml`
+rm ../docs/plugin.video.webshare/plugin.video.webshare-${VERSION}.zip
+zip -r ../docs/plugin.video.webshare/plugin.video.webshare-${VERSION}.zip plugin.video.webshare
