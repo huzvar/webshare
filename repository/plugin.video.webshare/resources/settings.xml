@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
   <category label="30204">
+    <setting id="token" type="text" visible="false" />
+    <setting id="what_last" type="text" visible="false" default="%#NONE#%"/>
+
     <setting label="30030" type="lsep" />
     <setting label="30031" id="username" type="text" default="" />
     <setting label="30032" id="password" type="text" default="" option="hidden" />
-    <setting id="token" type="text" visible="false" />
-    <setting id="what_last" type="text" visible="false" default="%#NONE#%"/>
+
+    <setting label="30033" type="lsep" />
     <setting label="30028" id="page_limit" type="number" default="25" />
   </category>
 </settings>

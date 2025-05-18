@@ -84,6 +84,10 @@ msgctxt "#30032"
 msgid "Password"
 msgstr "Heslo"
 
+msgctxt "#30033"
+msgid "Show"
+msgstr "Zobrazenie"
+
 # msgctxt "#30040"
 # msgid "Files download"
 # msgstr "Sťahovanie súborov"
