@@ -38,8 +38,8 @@ class Gui:
 
     # token not exists
     if not token:
-      username = self._addon.getSetting('wsuser')
-      password = self._addon.getSetting('wspass')
+      username = self._addon.getSetting("username")
+      password = self._addon.getSetting("password")
 
       if not (username and password):
         self._notification(self._addon.getLocalizedString(30101), sound = True)
@@ -148,6 +148,7 @@ class Gui:
 
   def List(self, params):
     index = int(params['index'])
+    page_limit = self._addon.getSetting("page_limit")
 
     if 0 <= index < len(self._lists): 
       list = self._lists[index]

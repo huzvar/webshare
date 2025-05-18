@@ -64,9 +64,9 @@ msgstr ""
 # msgid "Smallest"
 # msgstr "Najmenšie"
 
-# msgctxt "#30028"
-# msgid "Results on page"
-# msgstr "Výsledkov na stránku"
+msgctxt "#30028"
+msgid "Results on page"
+msgstr "Výsledkov na stránku"
 
 # msgctxt "#30029"
 # msgid "Memorized searches"
