@@ -23,11 +23,13 @@ class Gui:
       {'name': "Bol raz jeden zivot", 'search': "Bol raz jeden zivot", 'pattern': "^Bol raz jeden zivot"},
       {'name': "Bol raz jeden vynalezca", 'search': "Bol.raz.jeden.vynalezca", 'pattern': "^Bol.raz.jeden.vynalezca"},
       {'name': "Molly z Denali", 'search': "Molly.z.Denali", 'pattern': "^Molly.z.Denali"},
+      {'name': "Gábinin kouzelný domek", 'search': "Gábinin kouzelný domek", 'pattern': "^Gábinin kouzelný domek"},
 
       {'name': "Mandalorian", 'search': "Mandalorian", 'pattern': "^Mandalorian"},
       {'name': "MASH", 'search': "M.A.S.H.EP", 'pattern': "^M\\.A\\.S\\.H\\.EP"},
       {'name': "Posledni z nas", 'search': "Posledni z nas", 'pattern': "^(?!.*Bella Ramsey,Pedro Pascal,Gabriel Luna).*$"},
       {'name': "Jak se to dělá", 'search': "Jak se to dělá", 'pattern': "^Jak se to dělá S"},
+      {'name': "Pán prstenů", 'search': "Pán prstenů", 'pattern': "^Pán prstenů"},
     ]
 
   def _get_page_limit(self) -> int:

@@ -18,7 +18,7 @@ if __name__ == '__main__':
   api = WebshareAPI()
   api.login("levik0", "ASDqwe123")
 
-  search = "Jak se to dělá"
+  search = "Pán prstenů"
 
   # xml = api.user_data()
   # print("xxx ", ElementTree.tostring(xml, encoding='unicode'))
@@ -44,8 +44,10 @@ if __name__ == '__main__':
   # print(json.dumps(api.VideoList("Bol raz jeden zivot", "^Bol raz jeden zivot"), indent = 2))
 
   
-  # data = api.VideoList(search, "^" + search, page_limit = 100)
-  data = api.VideoList(search, "^Jak se to dělá S", page_limit = 100)
+  data = api.VideoList(search, "^" + search, page_limit = 100)
+  # data = api.VideoList(search, "verze", page_limit = 100)
   
+  print(data['total'])
+
   for file in data['file']:
     print(file['name'])
