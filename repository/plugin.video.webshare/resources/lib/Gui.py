@@ -20,10 +20,14 @@ class Gui:
     self._lists = [
       {'name': "Star Wars - Dobrodruzstvi mladych Jediu", 'search': "Star Wars - Dobrodruzstvi mladych Jediu", 'pattern': "^Star Wars - Dobrodruzstvi mladych Jediu"},
       {'name': "Smolkovia", 'search': "Šmolkovia-nové.príbehy", 'pattern': "^Šmolkovia"},
+      {'name': "Bol raz jeden zivot", 'search': "Bol raz jeden zivot", 'pattern': "^Bol raz jeden zivot"},
+      {'name': "Bol raz jeden vynalezca", 'search': "Bol.raz.jeden.vynalezca", 'pattern': "^Bol.raz.jeden.vynalezca"},
+      {'name': "Molly z Denali", 'search': "Molly.z.Denali", 'pattern': "^Molly.z.Denali"},
 
       {'name': "Mandalorian", 'search': "Mandalorian", 'pattern': "^Mandalorian"},
       {'name': "MASH", 'search': "M.A.S.H.EP", 'pattern': "^M\\.A\\.S\\.H\\.EP"},
       {'name': "Posledni z nas", 'search': "Posledni z nas", 'pattern': "^(?!.*Bella Ramsey,Pedro Pascal,Gabriel Luna).*$"},
+      {'name': "Jak se to dělá", 'search': "Jak se to dělá", 'pattern': "^Jak se to dělá S"},
     ]
 
   def _get_page_limit(self) -> int:
