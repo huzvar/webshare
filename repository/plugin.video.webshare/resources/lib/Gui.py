@@ -23,7 +23,8 @@ class Gui:
       {'name': "Bol raz jeden zivot", 'search': "Bol raz jeden zivot", 'pattern': "^Bol raz jeden zivot"},
       {'name': "Bol raz jeden vynalezca", 'search': "Bol.raz.jeden.vynalezca", 'pattern': "^Bol.raz.jeden.vynalezca"},
       {'name': "Molly z Denali", 'search': "Molly.z.Denali", 'pattern': "^Molly.z.Denali"},
-      {'name': "Gábinin kouzelný domek", 'search': "Gábinin kouzelný domek", 'pattern': "^Gábinin kouzelný domek"},
+      {'name': "Gabinin kouzelny domek", 'search': "Gábinin kouzelný domek", 'pattern': "^Gábinin kouzelný domek"},
+      {'name': "Ako si vycvicit draka", 'search': "Ako si vycvicit draka", 'pattern': ".*draka"},
 
       {'name': "Mandalorian", 'search': "Mandalorian", 'pattern': "^Mandalorian"},
       {'name': "MASH", 'search': "M.A.S.H.EP", 'pattern': "^M\\.A\\.S\\.H\\.EP"},
