@@ -18,7 +18,7 @@ if __name__ == '__main__':
   api = WebshareAPI()
   api.login("levik0", "ASDqwe123")
 
-  search = "Ako si vycvicit draka"
+  search = "planeta dinosauru"
 
   # xml = api.user_data()
   # print("xxx ", ElementTree.tostring(xml, encoding='unicode'))
@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
   
   # data = api.VideoList(search, "^" + search, page_limit = 100)
-  data = api.VideoList(search, ".*draka", page_limit = 100)
+  data = api.VideoList(search, "^Planeta Dinosauru S", page_limit = 100)
   
   print(data['total'])
 

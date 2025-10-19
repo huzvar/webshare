@@ -31,6 +31,7 @@ class Gui:
       {'name': "Posledni z nas", 'search': "Posledni z nas", 'pattern': "^(?!.*Bella Ramsey,Pedro Pascal,Gabriel Luna).*$"},
       {'name': "Jak se to dělá", 'search': "Jak se to dělá", 'pattern': "^Jak se to dělá S"},
       {'name': "Pán prstenů", 'search': "Pán prstenů", 'pattern': "^Pán prstenů"},
+      {'name': "Planeta dinosauru", 'search': "planeta dinosauru", 'pattern': "^Planeta Dinosauru S"},
     ]
 
   def _get_page_limit(self) -> int:
