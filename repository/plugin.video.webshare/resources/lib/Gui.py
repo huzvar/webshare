@@ -32,6 +32,7 @@ class Gui:
       {'name': "Jak se to dělá", 'search': "Jak se to dělá", 'pattern': "^Jak se to dělá S"},
       {'name': "Pán prstenů", 'search': "Pán prstenů", 'pattern': "^Pán prstenů"},
       {'name': "Planeta dinosauru", 'search': "planeta dinosauru", 'pattern': "^Planeta Dinosauru S"},
+      {'name': "Squid Game", 'search': "Squid.Game.S03", 'pattern': "^Squid.Game.S03"},
     ]
 
   def _get_page_limit(self) -> int:
